@@ -15,7 +15,7 @@ const cli = meow(
     --page, -p  page to scrap default=1
     --onlysearch, -os  only search without downloading subtitle [default=true]
     --silent, -s  do not display search output [default=false]
-    --index, -i  pass index to download subtitle [default=0]
+    --index, -i  pass index to download subtitle
     --unzip -u  auto unzip subtitle [default=true]
     --unzippath -up  unzip path default is current directory
 
@@ -53,8 +53,7 @@ const cli = meow(
       },
       index: {
         type: 'number',
-        alias: 'i',
-        default: 0
+        alias: 'i'
       },
       unzip: {
         type: 'boolean',
@@ -72,7 +71,7 @@ const cli = meow(
 const title = cli.input[0]
 const titletype = cli.flags.titletype
 let index = cli.flags.index
-const page = cli.flags.page
+const page = cli.flags.page - 1
 const silent = cli.flags.silent
 const onlysearch = cli.flags.onlysearch
 const path = () => {
@@ -99,13 +98,15 @@ animesub
       console.log(data)
     }
     if (!onlysearch) {
-      const response = await prompts({
-        type: 'number',
-        name: 'index',
-        message: `Select index(from 0 to ${data.json.length})`
-      })
+      if (!index) {
+        const response = await prompts({
+          type: 'number',
+          name: 'index',
+          message: `Select index(from 0 to ${data.json.length})`
+        })
 
-      index = response.index
+        index = response.index
+      }
 
       animesub
         .download(data.json[index].id, data.json[index].sh)
