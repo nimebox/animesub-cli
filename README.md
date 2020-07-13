@@ -28,6 +28,6 @@ $ node ./animesub-cli.js <title> [commands]
       $ animesub-cli boruto
       $ animesub-cli "shingeki no kyojin" -t=org
       $ animesub-cli "shingeki no kyojin" -t=org -p=2 -os=false -s
-      $ animesub-cli "shingeki no kyojin" -t=org -p=2 -os=false --id=66731
+      $ animesub-cli "shingeki no kyojin" -t=org -p=2 -os=false -i=0
 
 ```
