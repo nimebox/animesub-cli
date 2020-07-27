@@ -1,4 +1,6 @@
 const fs = require('fs')
+const fsp = fs.promises
+
 const meow = require('meow')
 const animesub = require('animesub-api')
 const prompts = require('prompts')
@@ -74,19 +76,17 @@ let index = cli.flags.index
 const page = cli.flags.page - 1
 const silent = cli.flags.silent
 const onlysearch = cli.flags.onlysearch
-const path = () => {
-  if (cli.flags.filename && cli.flags.filename !== 'undefined') {
-    return cli.flags.filename
-  } else {
-    return `${title}-${index}`
-  }
-}
+let path =
+  cli.flags.filename && cli.flags.filename !== 'undefined'
+    ? cli.flags.filename
+    : null
+
 const unzip = cli.flags.unzip
 const unzippath = () => {
   if (cli.flags.unzippath && cli.flags.unzippath !== 'undefined') {
     return cli.flags.unzippath
   } else {
-    return `./${title}-${index}/`
+    return null
   }
 }
 
@@ -110,13 +110,29 @@ animesub
 
       animesub
         .download(data.json[index].id, data.json[index].sh)
-        .then((file) => {
-          const archivePath = fs.writeFileSync(`${path()}.zip`, file)
-          if (unzip) {
-            fs.createReadStream(`${path()}.zip`).pipe(
-              unzipper.Extract({ path: unzippath() })
-            )
+        .then(async (file) => {
+          if (!path) {
+            path = `${data.json[index].title}`
           }
+          fsp
+            .writeFile(`${path}_${data.json[index].user}.zip`, file)
+            .then(() => {
+              if (unzip) {
+                if (unzippath()) {
+                  fs.createReadStream(
+                    `${path}_${data.json[index].user}.zip`
+                  ).pipe(unzipper.Extract({ path: unzippath() }))
+                } else {
+                  fs.createReadStream(
+                    `${path}_${data.json[index].user}.zip`
+                  ).pipe(
+                    unzipper.Extract({
+                      path: `./${path}_${data.json[index].user}/`
+                    })
+                  )
+                }
+              }
+            })
         })
         .catch((err) => console.error(err))
     }
