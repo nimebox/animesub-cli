@@ -23,6 +23,7 @@ $ node ./animesub-cli.js <title> [commands]
       --index, -i  pass index to download subtitle [default=0]
       --unzip -u  auto unzip subtitle [default=true]
       --unzippath -up  unzip path default is current directory
+      --user  download subtitles only for given user
 
     Examples
       $ animesub-cli boruto
