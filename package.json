@@ -1,6 +1,6 @@
 {
   "name": "animesub-cli",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "main": "src/index.js",
   "scripts": {
     "lint": "eslint --ext .js --ignore-path .gitignore .",
@@ -9,17 +9,16 @@
   "author": "xdk78",
   "license": "MIT",
   "dependencies": {
-    "animesub-api": "^0.10.1",
-    "meow": "^7.0.1",
-    "prompts": "^2.3.2",
+    "animesub-api": "^0.10.3",
+    "meow": "^10.1.2",
+    "prompts": "^2.4.2",
     "unzipper": "^0.10.11"
   },
   "devDependencies": {
-    "eslint": "^7.5.0",
-    "eslint-config-standard": "^14.1.1",
-    "eslint-plugin-import": "^2.22.0",
+    "eslint": "^8.4.1",
+    "eslint-config-standard": "^16.0.3",
+    "eslint-plugin-import": "^2.25.3",
     "eslint-plugin-node": "^11.1.0",
-    "eslint-plugin-promise": "^4.2.1",
-    "eslint-plugin-standard": "^4.0.1"
+    "eslint-plugin-promise": "^5.2.0"
   }
 }

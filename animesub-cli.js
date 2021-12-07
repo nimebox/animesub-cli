@@ -1,3 +1,4 @@
+/* eslint-disable no-tabs */
 const fs = require('fs')
 const fsp = fs.promises
 
